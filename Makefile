@@ -54,7 +54,7 @@ link:
 tests: all
 	@echo "Running unit tests..."
 	cd $(TESTS_BIN_DIR) && \
-		$(CTEST) --output-on-failure
+		./$(TEST_EXECUTABLE)
 
 # Define a rule to remove existing build files
 .PHONY: clean
