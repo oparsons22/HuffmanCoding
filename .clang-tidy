@@ -1,0 +1,11 @@
+---
+Checks: >
+  -*,
+  clang-analyzer-*,
+  bugprone-*,
+  cert-*,
+  performance-*,
+  readability-*,
+WarningsAsErrors: "*"
+HeaderFilterRegex: ".*"
+FormatStyle: google

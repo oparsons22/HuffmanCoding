@@ -1,0 +1,72 @@
+# This workflow performs the following:
+#   - Checks code formatting with clang-format
+#   - Lints code with cppcheck and clang-tidy
+#   - Builds and tests code with cmake, scan-build and ctest
+#   - Reports code coverage with llvm-profdata and llvm-cov
+
+name: CI
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  format:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Homebrew and dependencies
+        run: |
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          brew install clang-format
+
+      - name: Check code formatting with clang-format
+        run: make clang-format-dry-run
+
+  lint:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Homebrew and dependencies
+        run: |
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          brew install cppcheck
+
+      - name: Lint with cppcheck
+        run: make cppcheck
+
+  build-and-test:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Homebrew and dependencies
+        run: |
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          brew install llvm
+
+      - name: Build
+        run: make scan-build
+
+      - name: Check build succeeded
+        run: test -f build/CTemplate
+
+      - name: Run clang-tidy
+        run: make clang-tidy
+
+      - name: Run unit tests
+        run: make tests
+
+      - name: Generate coverage report
+        run: make coverage
+
+      - name: Upload coverage report to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: build/tests/coverage.info
+          flags: unittests
+          name: codecov-umbrella
