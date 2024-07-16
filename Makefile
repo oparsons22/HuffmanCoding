@@ -1,5 +1,5 @@
 # Define project name
-PROJECT_NAME = CTemplate
+PROJECT_NAME = HuffmanCoding
 
 # Define LLVM components
 CC = /opt/homebrew/opt/llvm/bin/clang
@@ -73,7 +73,7 @@ scan-build: clean
 .PHONY: clang-tidy
 clang-tidy: all
 	@echo "Performing static analysis with clang-tidy..."
-	$(CLANG_TIDY) -p $(BUILD_DIR) $(SRC_DIR)/**/*.c $(SRC_DIR)/**/*.h
+	$(CLANG_TIDY) -p $(BUILD_DIR) $(SRC_FILES) $(HEADER_FILES)
 
 # Define a rule to export coverage info
 .PHONY: coverage

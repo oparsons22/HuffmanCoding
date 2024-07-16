@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.20)
 cmake_policy(SET CMP0135 NEW)
 
 # Define the project name and version
-project(CTemplate VERSION 2.0.0 LANGUAGES C CXX)
+project(HuffmanCoding VERSION 2.0.0 LANGUAGES C CXX)
 
 # Specify the C and C++ standards
 set(CMAKE_C_STANDARD 17)
