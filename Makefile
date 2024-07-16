@@ -29,7 +29,7 @@ TEST_FILES := $(shell find $(TESTS_DIR) -type f -name '*.cpp')
 COMPILE_COMMANDS = $(BUILD_DIR)/compile_commands.json
 
 # Define the test executable
-TEST_EXECUTABLE = test_$(PROJECT_NAME)
+TEST_EXECUTABLE =$(TESTS_BIN_DIR)/test_$(PROJECT_NAME)
 COV_REPORT_DIR = $(TESTS_BIN_DIR)/coverage_report
 COV_IGNORE_REGEX = $(DEPS_DIR)/*
 
@@ -54,7 +54,7 @@ link:
 tests: all
 	@echo "Running unit tests..."
 	cd $(TESTS_BIN_DIR) && \
-		./$(TEST_EXECUTABLE)
+		GTEST_COLOR=1 ${CTEST} --output-on-failure --verbose
 
 # Define a rule to remove existing build files
 .PHONY: clean
@@ -79,13 +79,13 @@ clang-tidy: all
 .PHONY: coverage
 coverage: tests
 	$(LLVM_PROFDATA) merge -sparse $(TESTS_BIN_DIR)/default.profraw -o $(TESTS_BIN_DIR)/merged.profdata
-	$(LLVM_COV) export -format=lcov -instr-profile=$(TESTS_BIN_DIR)/merged.profdata $(TESTS_BIN_DIR)/$(TEST_EXECUTABLE) --ignore-filename-regex=$(COV_IGNORE_REGEX) > $(TESTS_BIN_DIR)/coverage.info
+	$(LLVM_COV) export -format=lcov -instr-profile=$(TESTS_BIN_DIR)/merged.profdata $(TEST_EXECUTABLE) --ignore-filename-regex=$(COV_IGNORE_REGEX) > $(TESTS_BIN_DIR)/coverage.info
 
 # Define a rule to generate a coverage HTML report
 .PHONY: coverage-html
 coverage-html: tests
 	$(LLVM_PROFDATA) merge -sparse $(TESTS_BIN_DIR)/default.profraw -o $(TESTS_BIN_DIR)/merged.profdata
-	$(LLVM_COV) show $(TESTS_BIN_DIR)/$(TEST_EXECUTABLE) -instr-profile=$(TESTS_BIN_DIR)/merged.profdata -format=html -output-dir=$(COV_REPORT_DIR) --ignore-filename-regex=$(COV_IGNORE_REGEX)
+	$(LLVM_COV) show $(TEST_EXECUTABLE) -instr-profile=$(TESTS_BIN_DIR)/merged.profdata -format=html -output-dir=$(COV_REPORT_DIR) --ignore-filename-regex=$(COV_IGNORE_REGEX)
 	open $(COV_REPORT_DIR)/index.html
 	
 # Define a rule to format using clang-format

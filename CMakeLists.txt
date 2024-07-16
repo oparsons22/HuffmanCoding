@@ -35,6 +35,13 @@ add_executable(${PROJECT_NAME} ${SRC_FILES})
 # Include directories
 target_include_directories(${PROJECT_NAME} PRIVATE ${SRC_DIR})
 
+# Output directories (optional, can be omitted if you want defaults)
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
+    ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib
+)
+
 # Fetch googletest
 include(FetchContent)
 FetchContent_Declare(
