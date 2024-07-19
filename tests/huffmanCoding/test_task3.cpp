@@ -1,6 +1,6 @@
 /**
  * @file test_task3.cpp
- * @brief Unit tests for task3.c.
+ * @brief Unit tests for task3.
  * @date 2024-07-16
  *
  * Copyright (c) 2024 Oliver Parsons
