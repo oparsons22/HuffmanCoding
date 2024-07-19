@@ -20,7 +20,7 @@ extern "C" {
 #include "huffmanCoding/task3.h"
 }
 
-/* Test Fixtures. */
+/* Test Fixtures */
 
 /**
  * @brief Letter-frequency pair linked list test fixture.
