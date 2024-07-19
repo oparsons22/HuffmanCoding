@@ -29,4 +29,4 @@ target_sources(${TEST_EXECUTABLE} PRIVATE ${SRC_FILES})
 
 # Add a test target for running the tests with CTest
 enable_testing()
-add_test(NAME UnitTests COMMAND ${TEST_EXECUTABLE})
+add_test(NAME ${TEST_EXECUTABLE} COMMAND ${TEST_EXECUTABLE})
