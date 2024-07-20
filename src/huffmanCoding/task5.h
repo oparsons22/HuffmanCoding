@@ -7,6 +7,9 @@
  *
  */
 
+#ifndef TASK5_H
+#define TASK5_H
+
 /* Project Includes */
 
 #include "huffmanCoding/task3.h"
@@ -50,3 +53,5 @@ extern sBinaryTreeNode_t* mergeBinaryTreeNodes(
  * @param[inout] io_psRoot The pointer to the binary tree root node.
  */
 extern void freeBinaryTree(sBinaryTreeNode_t* io_psRoot);
+
+#endif  // TASK5_H
