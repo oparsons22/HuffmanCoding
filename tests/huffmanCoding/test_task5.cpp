@@ -23,7 +23,7 @@ extern "C" {
 #include "huffmanCoding/task5.h"
 }
 
-/* Helper Function Prototypes */
+/* Test Fixtures */
 
 class Task5Test : public ::testing::Test {
  protected:
